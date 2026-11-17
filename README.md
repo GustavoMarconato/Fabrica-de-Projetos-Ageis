@@ -1,4 +1,4 @@
-# Orion Bioinsumos Dashboard
+# Orion Bioinsumos Dashboard para Vercel
 
 Protótipo acadêmico desenvolvido para a Fábrica de Projetos Ágeis da Unimar. O sistema apresenta condições climáticas e estimativas para a aplicação de bioinsumos.
 
@@ -18,14 +18,13 @@ Protótipo acadêmico desenvolvido para a Fábrica de Projetos Ágeis da Unimar.
 
 - TypeScript
 - React 19
-- Next.js e Vinext
-- Vite
-- Cloudflare Workers
+- Next.js 16
+- Vercel Functions
 - Tailwind CSS
 - Google Planilhas em CSV
 - Anthropic API para o assistente
 
-## Como executar
+## Como executar no computador
 
 Requisitos:
 
@@ -53,11 +52,24 @@ npm run dev
 
 Abra o endereço informado no terminal. Qualquer usuário e senha preenchidos liberam o login demonstrativo.
 
-O dashboard funciona sem a chave da Anthropic. Nesse caso, apenas o assistente virtual fica indisponível.
+## Publicação na Vercel
+
+1. Envie os arquivos desta pasta para um repositório no GitHub.
+2. Entre em https://vercel.com e faça login.
+3. Clique em Add New e depois em Project.
+4. Importe o repositório do GitHub.
+5. Confirme Framework Preset como Next.js.
+6. Não altere Root Directory, Build Command ou Output Directory.
+7. Para usar o assistente, adicione `ANTHROPIC_API_KEY` e `ANTHROPIC_MODEL` em Environment Variables.
+8. Clique em Deploy.
+
+O painel, a planilha e o login demonstrativo funcionam sem a chave. Somente o assistente fica indisponível.
+
+Depois de cada envio para a branch principal no GitHub, a Vercel cria uma nova versão automaticamente.
 
 ## Integração com a planilha
 
-A rota `/api/excel-live` fica em `worker/index.ts`. Ela busca o CSV publicado no Google Planilhas e o entrega para o dashboard. A tela consulta essa rota a cada 5 segundos e recalcula os indicadores quando identifica uma alteração.
+A rota `/api/excel-live` fica em `app/api/excel-live/route.ts`. Ela é uma Vercel Function do Next.js. A rota busca o CSV publicado no Google Planilhas e o entrega para o dashboard. A tela consulta essa rota a cada 5 segundos e recalcula os indicadores quando identifica uma alteração.
 
 O arquivo `public/Orion_Base_Dashboard.xlsx` é a base Excel disponível para download e uso local.
 
@@ -71,7 +83,7 @@ Os valores abaixo são hipóteses de simulação e não representam telemetria o
 
 ## Segurança
 
-Não envie chaves de API para o GitHub. Os arquivos `.env` estão ignorados pelo Git. Configure as variáveis diretamente no serviço de hospedagem usado.
+Nunca envie uma chave de API para o GitHub. Os arquivos `.env` estão ignorados pelo Git. Configure a chave em Settings e Environment Variables dentro do projeto na Vercel.
 
 ## Grupo
 
@@ -81,4 +93,3 @@ Não envie chaves de API para o GitHub. Os arquivos `.env` estão ignorados pelo
 - Gustavo Marconato
 - Lucas Silva
 - Carlos Alberto
-
